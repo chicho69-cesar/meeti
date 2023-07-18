@@ -1,9 +1,13 @@
-import path from 'node:path'
+import 'colors'
 import express from 'express'
 import expressLayouts from 'express-ejs-layouts'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
+
+import db from './config/db.js'
+import passport from './config/passport.js'
+import homeRouter from './routes/home.routes.js'
 
 class Server {
   constructor() {
@@ -13,22 +17,63 @@ class Server {
     this.paths = {
       home: '/'
     }
+
+    // DB connection
+    this.dbConnection()
+    // Middlewares
+    this.middlewares()
+    // Config
+    this.config()
+    // Routes
+    this.routes()
   }
 
   async dbConnection() {
-    // 
+    try {
+      await db.authenticate()
+      db.sync()
+
+      console.log('Connection has been established successfully.'.green)
+    } catch (error) {
+      console.log(`${error}`.red)
+    }
   }
 
   middlewares() {
-    // 
+    // Enable body parser
+    this.app.use(bodyParser.json())
+    // URL encoded for POST requests with form data
+    this.app.use(express.urlencoded({ extended: true }))
+    // JSON parser for API requests
+    this.app.use(express.json())
+    // Enable the use of the public folder
+    this.app.use(express.static('public'))
+    // Cookies by cookie parser
+    this.app.use(cookieParser())
+    // Session
+    this.app.use(session({
+      secret: process.env.SECRET,
+      key: process.env.KEY,
+      resave: false,
+      saveUninitialized: true,
+    }))
+    // Initialize passport
+    this.app.use(passport.initialize())
+    // Passport sessions
+    this.app.use(passport.session())
   }
 
   config() {
-    // 
+    // Configure the express layouts for ejs
+    this.app.use(expressLayouts)
+    // Configure ejs as view engine
+    this.app.set('view engine', 'ejs')
+    // Configure views folder
+    this.app.set('views', './views')
   }
 
   routes() {
-    // 
+    this.app.use(this.paths.home, homeRouter)
   }
 
   listen() {
