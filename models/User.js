@@ -59,4 +59,8 @@ User.prototype.matchPassword = function(password) {
   return bcrypt.compareSync(password, this.password)
 }
 
+User.prototype.hashPassword = function (password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+}
+
 export default User
