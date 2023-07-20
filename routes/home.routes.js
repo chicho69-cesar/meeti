@@ -1,11 +1,10 @@
 import { Router } from 'express'
+import { home, removeSessionMessages } from '../controllers/home.controller.js'
 
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.render('home', {
-    title: 'Cesar Villalobos Olmos'
-  })
-})
+router.get('/', home)
+
+router.get('/remove-messages', removeSessionMessages)
 
 export default router
