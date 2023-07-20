@@ -7,16 +7,23 @@ import session from 'express-session'
 
 import db from './config/db.js'
 import passport from './config/passport.js'
-import homeRouter from './routes/home.routes.js'
+import {
+  adminRouter,
+  authRouter,
+  commentsRouter,
+  groupsRouter,
+  homeRouter,
+  meetiRouter,
+  searchsRouter,
+  usersRouter,
+} from './routes/index.js'
 
 class Server {
   constructor() {
     this.app = express()
     this.port = process.env.PORT || 3000
 
-    this.paths = {
-      home: '/'
-    }
+    this.path = '/'
 
     // DB connection
     this.dbConnection()
@@ -73,7 +80,14 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.paths.home, homeRouter)
+    this.app.use(this.path, adminRouter)
+    this.app.use(this.path, authRouter)
+    this.app.use(this.path, commentsRouter)
+    this.app.use(this.path, groupsRouter)
+    this.app.use(this.path, homeRouter)
+    this.app.use(this.path, meetiRouter)
+    this.app.use(this.path, searchsRouter)
+    this.app.use(this.path, usersRouter)
   }
 
   listen() {
