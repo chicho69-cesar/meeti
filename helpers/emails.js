@@ -1,6 +1,9 @@
 import fs from 'node:fs'
-import nodemailer from 'nodemailer'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import ejs from 'ejs'
+import nodemailer from 'nodemailer'
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
@@ -12,6 +15,9 @@ const transporter = nodemailer.createTransport({
 })
 
 export const sendMail = async (options) => {
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = path.dirname(__filename)
+
   // Name of template for example: confirm-account.ejs
   const file = __dirname + `/../views/emails/${options.file}.ejs`
   // Compile the file

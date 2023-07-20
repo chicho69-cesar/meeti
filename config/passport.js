@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
 
   if (!user) {
     return next(null, false, {
-      message: 'The user doesn\' exists'
+      message: 'The user doesn\'t exists'
     })
   }
 
