@@ -7,7 +7,7 @@ export const addComment = async (req = request, res = response) => {
   const { comment } = req.body
 
   await Comment.create({
-    comment,
+    message: comment,
     meetiId,
     userId,
   })
@@ -30,7 +30,7 @@ export const deleteComment = async (req = request, res = response) => {
     where: { id: comment.meetiId },
   })
 
-  if (comment.userId === req.user.id || meeti.userId === req.user.id) {
+  if (comment.userId === req.user?.id || meeti.userId === req.user?.id) {
     await Comment.destroy({
       where: { id: commentId },
     })
