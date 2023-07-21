@@ -188,33 +188,6 @@ export const showMeeti = async (req = request, res = response) => {
     return res.redirect('/')
   }
 
-  const latRef = +meeti.location[0] // Latitud de referencia
-  const lngRef = +meeti.location[1] // Longitud de referencia
-
-  const nearbyMeetis = await Meeti.findAll({
-    order: Sequelize.literal(`(
-      6371 * acos(
-        cos(radians(${latRef})) * cos(radians(location[0])) * cos(radians(location[1]) - radians(${lngRef})) +
-        sin(radians(${latRef})) * sin(radians(location[0]))
-      )
-    )`), // Ordena del más cercano al más lejano
-    where: Sequelize.where(
-      Sequelize.literal(`(
-        6371 * acos(
-          cos(radians(${latRef})) * cos(radians(location[0])) * cos(radians(location[1]) - radians(${lngRef})) +
-          sin(radians(${latRef})) * sin(radians(location[0]))
-        )
-      )`),
-      { [Op.lte]: 2 }, // 2 kilómetros
-    ),
-    limit: 3,
-    offset: 1,
-    include: [
-      { model: Group, as: 'group' },
-      { model: User, as: 'user', attributes: ['id', 'name', 'image'] },
-    ]
-  })
-
   const comments = await Comment.findAll({
     where: { meetiId: meeti.id },
     include: [
@@ -228,7 +201,6 @@ export const showMeeti = async (req = request, res = response) => {
     userLogged: req.user,
     meeti,
     comments,
-    nearbyMeetis,
     moment,
     messages: req.session.messages,
   })

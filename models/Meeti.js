@@ -83,7 +83,12 @@ const Meeti = db.define('meetis', {
     type: DataTypes.STRING,
     get() {
       const value = this.getDataValue('location')
-      return value ? value.split(',') : null
+      if (value) {
+        const [lat, lng] = value.split(',').map(parseFloat)
+        return [lat, lng]
+      }
+      
+      return null
     },
     set(value) {
       this.setDataValue('location', value.join(','))
