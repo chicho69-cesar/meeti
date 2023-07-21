@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function confirmAssistance(e) {
   e.preventDefault()
+  const confirmUrl = e.target.action
 
   const btn = document.querySelector('#confirm-assistance input[type="submit"]')
-  let action = document.querySelector('#action').value
+  let action = document.querySelector('#actionButton').value
   const message = document.querySelector('#message')
 
   // limpia la respuesta previa
@@ -25,18 +26,18 @@ function confirmAssistance(e) {
     action
   }
 
-  axios.post(this.action, data)
+  axios.post(confirmUrl, data)
     .then(response => {
       console.log(response)
 
       if (action === 'confirm') {
         // modifica los elementos del botón
-        document.querySelector('#action').value = 'cancelar'
+        document.querySelector('#actionButton').value = 'cancel'
         btn.value = 'Cancelar'
         btn.classList.remove('btn-blue')
         btn.classList.add('btn-red')
       } else {
-        document.querySelector('#action').value = 'confirmar'
+        document.querySelector('#actionButton').value = 'confirm'
         btn.value = 'Si'
         btn.classList.remove('btn-red')
         btn.classList.add('btn-blue')
