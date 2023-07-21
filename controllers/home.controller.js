@@ -18,7 +18,7 @@ export const home = async (req = request, res = response) => {
       order: [['date', 'ASC']],
       include: [
         { model: Group, as: 'group', attributes: ['image'] },
-        { model: User, as: 'user', attributes: ['name', 'image'] },
+        { model: User, as: 'user', attributes: ['id', 'name', 'image'] },
       ]
     })
   ]
