@@ -1,0 +1,31 @@
+<main class="container container-forms">
+  <h1>
+    <%= pageName %>
+  </h1>
+
+  <form action="/sign-up" method="POST" class="default-form">
+    <div class="field">
+      <label>E-mail</label>
+      <input type="email" name="email" placeholder="Tu Email">
+    </div>
+
+    <div class="field">
+      <label>Nombre</label>
+      <input type="text" name="name" placeholder="Tu Nombre">
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Tu Password">
+    </div>
+
+    <div class="field">
+      <label>Repetir Password</label>
+      <input type="password" name="confirm" placeholder="Repite tu Password">
+    </div>
+
+    <div class="field send">
+      <input type="submit" class="btn btn-pink" value="Crear Cuenta">
+    </div>
+  </form>
+</main>
