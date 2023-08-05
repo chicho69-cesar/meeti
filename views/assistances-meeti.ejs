@@ -1,0 +1,25 @@
+<main class="container assistances">
+  <h1>
+    <%= pageName %>
+  </h1>
+
+  <% if (assistances.length > 0 ) { %>
+    <ul class="assistances-list">
+      <% assistances.forEach(assistance => { %>
+        <li>
+          <div class="image">
+            <% if (assistance.image) { %>
+              <img src="/uploads/profiles/<%= assistance.image %>">
+            <% } %>
+          </div>
+
+          <div class="text">
+            <%= assistance.name %>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="no-assistances">No hay asistentes</p>
+  <% } %>
+</main>
