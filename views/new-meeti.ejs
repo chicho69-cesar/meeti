@@ -1,0 +1,101 @@
+<main class="container container-forms">
+  <h1><%- pageName %></h1>
+
+  <form class="default-form" action="/new-meeti" method="POST">
+    <legend>Sobre el Meeti</legend>
+
+    <div class="field">
+      <label>Grupo</label>
+      <select name="groupId">
+        <option value="" disabled selected> -- Selecciona Grupo -- </option>
+        <% if (groups.length> 0 ) { %>
+          <% groups.forEach(group => { %>
+            <option value="<%= group.id %>">
+              <%= group.name %>
+            </option>
+          <% }) %>
+        <% } %>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Titulo</label>
+      <input type="text" name="title" placeholder="Titulo Meeti">
+    </div>
+
+    <div class="field">
+      <label>Invitado</label>
+      <input type="text" name="invited" placeholder="Nombre Invitado o Ponente (si aplica)">
+    </div>
+
+    <div class="cols-2 grid">
+      <div class="field">
+        <label>Fecha</label>
+        <input type="date" name="date" placeholder="Fecha Meeti">
+      </div>
+
+      <div class="field">
+        <label>Hora</label>
+        <input type="time" name="hour" placeholder="Hora Meeti">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Cupo</label>
+      <input type="number" min="1" name="quota" placeholder="Cupo Meeti (si aplica)">
+    </div>
+
+    <div class="field description">
+      <label>Descripción</label>
+
+      <div class="editor-container">
+        <input type="hidden" id="x" name="description">
+        <trix-editor input="x"></trix-editor>
+      </div>
+    </div>
+
+    <legend>Ubicación Meeti</legend>
+
+    <div class="field searcher">
+      <label>Coloca la Dirección del Meeti</label>
+      <div class="input-container">
+        <input type="text" id="formSearcher" placeholder="Ubicación">
+        <small>El asistente colocará una dirección estimada</small>
+      </div>
+    </div>
+
+    <div class="field map">
+      <div id="map"></div>
+      <p class="information">Mueve el Pin hacia el punto exacto en caso de ser necesario</p>
+    </div>
+
+    <p class="information">Confirma que los siguientes campos sean correctos:</p>
+    
+    <div class="field">
+      <label>Dirección</label>
+      <input type="text" id="direction" name="direction" placeholder="Dirección">
+    </div>
+
+    <div class="field">
+      <label>Ciudad</label>
+      <input type="text" id="city" name="city" placeholder="Ciudad">
+    </div>
+
+    <div class="field">
+      <label>Estado</label>
+      <input type="text" id="state" name="state" placeholder="Estado">
+    </div>
+
+    <div class="field">
+      <label>País</label>
+      <input type="text" id="country" name="country" placeholder="País">
+    </div>
+
+    <input type="hidden" id="lat" name="lat">
+    <input type="hidden" id="lng" name="lng">
+    
+    <div class="field send">
+      <input type="submit" class="btn btn-pink" value="Crear Meeti">
+    </div>
+  </form>
+</main>
